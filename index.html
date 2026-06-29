@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockFlow Warehouse Inventory</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">SF</div>
+          <div>
+            <strong>StockFlow</strong>
+            <span>Warehouse OS</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Sections">
+          <button class="nav-item active" data-view="dashboard" title="Dashboard">
+            <span class="nav-icon">▦</span>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" data-view="inventory" title="Inventory">
+            <span class="nav-icon">▤</span>
+            <span>Inventory</span>
+          </button>
+          <button class="nav-item" data-view="automation" title="Automation">
+            <span class="nav-icon">↻</span>
+            <span>Automation</span>
+          </button>
+          <button class="nav-item" data-view="orders" title="Purchase orders">
+            <span class="nav-icon">⇥</span>
+            <span>Orders</span>
+          </button>
+          <button class="nav-item" data-view="activity" title="Activity log">
+            <span class="nav-icon">≡</span>
+            <span>Activity</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-status">
+          <span class="status-dot"></span>
+          <div>
+            <strong>Automation live</strong>
+            <span id="sidebarSync">Last checked just now</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Warehouse Inventory Management</p>
+            <h1 id="viewTitle">Dashboard</h1>
+          </div>
+          <div class="top-actions">
+            <label class="search-box">
+              <span>⌕</span>
+              <input id="globalSearch" type="search" placeholder="Search SKU, item, bin, supplier" />
+            </label>
+            <button class="icon-button" id="exportBtn" title="Export inventory CSV" aria-label="Export inventory CSV">⇩</button>
+            <button class="primary-button" id="openItemModal">+ Item</button>
+          </div>
+        </header>
+
+        <section class="view active" id="dashboardView" aria-labelledby="viewTitle">
+          <div class="metrics-grid">
+            <article class="metric">
+              <span>Total SKUs</span>
+              <strong id="metricSkus">0</strong>
+              <small>Tracked across all zones</small>
+            </article>
+            <article class="metric">
+              <span>Inventory Value</span>
+              <strong id="metricValue">$0</strong>
+              <small>Based on unit cost</small>
+            </article>
+            <article class="metric warning">
+              <span>Below Minimum</span>
+              <strong id="metricLow">0</strong>
+              <small>Need stocking attention</small>
+            </article>
+            <article class="metric good">
+              <span>Open Reorders</span>
+              <strong id="metricOrders">0</strong>
+              <small>Generated automatically</small>
+            </article>
+          </div>
+
+          <div class="dashboard-layout">
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Stock Health</h2>
+                  <p>Items ranked by reorder urgency.</p>
+                </div>
+                <button class="secondary-button" id="runAutomationBtn">Run Check</button>
+              </div>
+              <div id="healthList" class="health-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Stock Movement</h2>
+                  <p>Inbound, outbound, and net changes.</p>
+                </div>
+              </div>
+              <div class="bar-chart" id="movementChart" aria-label="Stock movement chart"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="inventoryView" aria-labelledby="viewTitle">
+          <div class="toolbar">
+            <div class="segmented" role="tablist" aria-label="Inventory filters">
+              <button class="segment active" data-filter="all">All</button>
+              <button class="segment" data-filter="low">Low</button>
+              <button class="segment" data-filter="ok">Healthy</button>
+              <button class="segment" data-filter="overstock">Overstock</button>
+            </div>
+            <button class="secondary-button" id="receiveStockBtn">Receive Stock</button>
+            <button class="secondary-button" id="dispatchStockBtn">Dispatch</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Item</th>
+                  <th>Zone</th>
+                  <th>On Hand</th>
+                  <th>Min</th>
+                  <th>Reorder</th>
+                  <th>Supplier</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="inventoryTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="view" id="automationView" aria-labelledby="viewTitle">
+          <div class="automation-grid">
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Stocking Rules</h2>
+                  <p>Set how the system creates reorder suggestions.</p>
+                </div>
+              </div>
+              <div class="form-grid">
+                <label>
+                  Reorder buffer
+                  <input id="bufferInput" type="number" min="0" max="100" step="5" />
+                </label>
+                <label>
+                  Demand multiplier
+                  <input id="demandInput" type="number" min="1" max="4" step="0.1" />
+                </label>
+                <label>
+                  Default lead time
+                  <input id="leadInput" type="number" min="1" max="60" />
+                </label>
+                <label class="toggle-row">
+                  <span>Auto-create purchase orders</span>
+                  <input id="autoOrdersInput" type="checkbox" />
+                </label>
+              </div>
+              <button class="primary-button full" id="saveRulesBtn">Save Rules</button>
+            </section>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Recommended Restocks</h2>
+                  <p>Calculated from minimums, demand, and lead time.</p>
+                </div>
+              </div>
+              <div id="recommendationsList" class="recommendation-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="ordersView" aria-labelledby="viewTitle">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Purchase Orders</h2>
+                <p>Open supplier replenishment created by automation or manual action.</p>
+              </div>
+              <button class="secondary-button" id="clearCompletedBtn">Clear Completed</button>
+            </div>
+            <div id="ordersList" class="orders-list"></div>
+          </div>
+        </section>
+
+        <section class="view" id="activityView" aria-labelledby="viewTitle">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Activity Log</h2>
+                <p>Every stock change and automation event.</p>
+              </div>
+              <button class="secondary-button" id="resetDemoBtn">Reset Demo Data</button>
+            </div>
+            <div id="activityLog" class="activity-log"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="itemDialog">
+      <form method="dialog" class="dialog-card" id="itemForm">
+        <div class="dialog-head">
+          <h2 id="itemDialogTitle">Add Item</h2>
+          <button class="icon-button" value="cancel" title="Close" aria-label="Close">×</button>
+        </div>
+        <input type="hidden" id="itemId" />
+        <div class="form-grid">
+          <label>SKU<input id="skuInput" required /></label>
+          <label>Item name<input id="nameInput" required /></label>
+          <label>Warehouse zone<input id="zoneInput" required /></label>
+          <label>Bin<input id="binInput" required /></label>
+          <label>On hand<input id="qtyInput" type="number" min="0" required /></label>
+          <label>Minimum<input id="minInput" type="number" min="0" required /></label>
+          <label>Reorder qty<input id="reorderInput" type="number" min="1" required /></label>
+          <label>Unit cost<input id="costInput" type="number" min="0" step="0.01" required /></label>
+          <label>Supplier<input id="supplierInput" required /></label>
+          <label>Daily demand<input id="demandRateInput" type="number" min="0" step="1" required /></label>
+        </div>
+        <div class="dialog-actions">
+          <button class="secondary-button" value="cancel">Cancel</button>
+          <button class="primary-button" id="saveItemBtn" value="default">Save Item</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="stockDialog">
+      <form method="dialog" class="dialog-card" id="stockForm">
+        <div class="dialog-head">
+          <h2 id="stockDialogTitle">Adjust Stock</h2>
+          <button class="icon-button" value="cancel" title="Close" aria-label="Close">×</button>
+        </div>
+        <input type="hidden" id="stockMode" />
+        <label>
+          Item
+          <select id="stockItemSelect"></select>
+        </label>
+        <label>
+          Quantity
+          <input id="stockQtyInput" type="number" min="1" required />
+        </label>
+        <label>
+          Reference
+          <input id="stockReferenceInput" placeholder="PO, pick ticket, or note" />
+        </label>
+        <div class="dialog-actions">
+          <button class="secondary-button" value="cancel">Cancel</button>
+          <button class="primary-button" id="saveStockBtn" value="default">Apply</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
