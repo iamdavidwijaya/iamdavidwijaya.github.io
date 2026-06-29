@@ -3,126 +3,144 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StockFlow Warehouse Inventory</title>
+    <title>Multi Jaya Diesel Inventory</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-shell">
-      <aside class="sidebar" aria-label="Primary">
+      <aside class="sidebar" aria-label="Primary navigation">
         <div class="brand">
-          <div class="brand-mark" aria-hidden="true">SF</div>
+          <img class="brand-logo" src="MJD.webp" alt="Multi Jaya Diesel logo" />
           <div>
-            <strong>StockFlow</strong>
-            <span>Warehouse OS</span>
+            <strong>Multi Jaya Diesel</strong>
+            <span>Parts Inventory</span>
           </div>
         </div>
 
         <nav class="nav-list" aria-label="Sections">
-          <button class="nav-item active" data-view="dashboard" title="Dashboard">
-            <span class="nav-icon">▦</span>
-            <span>Dashboard</span>
-          </button>
-          <button class="nav-item" data-view="inventory" title="Inventory">
-            <span class="nav-icon">▤</span>
-            <span>Inventory</span>
-          </button>
-          <button class="nav-item" data-view="automation" title="Automation">
-            <span class="nav-icon">↻</span>
-            <span>Automation</span>
-          </button>
-          <button class="nav-item" data-view="orders" title="Purchase orders">
-            <span class="nav-icon">⇥</span>
-            <span>Orders</span>
-          </button>
-          <button class="nav-item" data-view="activity" title="Activity log">
-            <span class="nav-icon">≡</span>
-            <span>Activity</span>
-          </button>
+          <a class="nav-item" href="#dashboard"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+          <a class="nav-item" href="#inventory"><span class="nav-icon">▤</span><span>Inventory</span></a>
+          <a class="nav-item" href="#restock"><span class="nav-icon">↻</span><span>Restock Plan</span></a>
+          <a class="nav-item" href="#orders"><span class="nav-icon">⇥</span><span>Orders</span></a>
+          <a class="nav-item" href="#activity"><span class="nav-icon">≡</span><span>Activity</span></a>
         </nav>
 
         <div class="sidebar-status">
           <span class="status-dot"></span>
           <div>
-            <strong>Automation live</strong>
-            <span id="sidebarSync">Last checked just now</span>
+            <strong>Static GitHub build</strong>
+            <span>HTML + CSS only</span>
           </div>
         </div>
       </aside>
 
       <main class="main">
-        <header class="topbar">
+        <header class="topbar" id="dashboard">
           <div>
-            <p class="eyebrow">Warehouse Inventory Management</p>
-            <h1 id="viewTitle">Dashboard</h1>
+            <p class="eyebrow">Diesel Spare Parts Inventory</p>
+            <h1>Warehouse Stocking Dashboard</h1>
           </div>
           <div class="top-actions">
-            <label class="search-box">
-              <span>⌕</span>
-              <input id="globalSearch" type="search" placeholder="Search SKU, item, bin, supplier" />
-            </label>
-            <button class="icon-button" id="exportBtn" title="Export inventory CSV" aria-label="Export inventory CSV">⇩</button>
-            <button class="primary-button" id="openItemModal">+ Item</button>
+            <span class="search-box"><span>⌕</span><span>Search SKU, item, bin, supplier</span></span>
+            <a class="primary-button" href="#inventory">View Stock</a>
           </div>
         </header>
 
-        <section class="view active" id="dashboardView" aria-labelledby="viewTitle">
-          <div class="metrics-grid">
-            <article class="metric">
-              <span>Total SKUs</span>
-              <strong id="metricSkus">0</strong>
-              <small>Tracked across all zones</small>
-            </article>
-            <article class="metric">
-              <span>Inventory Value</span>
-              <strong id="metricValue">$0</strong>
-              <small>Based on unit cost</small>
-            </article>
-            <article class="metric warning">
-              <span>Below Minimum</span>
-              <strong id="metricLow">0</strong>
-              <small>Need stocking attention</small>
-            </article>
-            <article class="metric good">
-              <span>Open Reorders</span>
-              <strong id="metricOrders">0</strong>
-              <small>Generated automatically</small>
-            </article>
+        <section class="metrics-grid" aria-label="Inventory summary">
+          <article class="metric">
+            <span>Total SKUs</span>
+            <strong>5</strong>
+            <small>Tracked across all zones</small>
+          </article>
+          <article class="metric">
+            <span>Inventory Value</span>
+            <strong>Rp56M</strong>
+            <small>Based on unit cost</small>
+          </article>
+          <article class="metric warning">
+            <span>Below Minimum</span>
+            <strong>3</strong>
+            <small>Need stocking attention</small>
+          </article>
+          <article class="metric good">
+            <span>Open Reorders</span>
+            <strong>3</strong>
+            <small>Ready for supplier follow-up</small>
+          </article>
+        </section>
+
+        <section class="dashboard-layout">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Stock Health</h2>
+                <p>Items ranked by reorder urgency.</p>
+              </div>
+              <span class="pill">20% buffer</span>
+            </div>
+            <div class="health-list">
+              <article class="health-item">
+                <div class="health-row">
+                  <div>
+                    <strong>Deutz Injector Nozzle</strong>
+                    <div class="muted">DEU-INJ-0415 · Engine Parts · E-03-01</div>
+                  </div>
+                  <span class="status low">Low</span>
+                </div>
+                <div class="progress"><span class="critical" style="width: 50%"></span></div>
+                <div class="muted">6 on hand · minimum 12</div>
+              </article>
+              <article class="health-item">
+                <div class="health-row">
+                  <div>
+                    <strong>Heavy Duty Oil Filter</strong>
+                    <div class="muted">FLT-OF-2201 · Filter Rack · F-12-07</div>
+                  </div>
+                  <span class="status low">Low</span>
+                </div>
+                <div class="progress"><span class="low" style="width: 75%"></span></div>
+                <div class="muted">18 on hand · minimum 24</div>
+              </article>
+              <article class="health-item">
+                <div class="health-row">
+                  <div>
+                    <strong>Cummins Fan Belt</strong>
+                    <div class="muted">CUM-BLT-7780 · Belts · B-02-05</div>
+                  </div>
+                  <span class="status overstock">Overstock</span>
+                </div>
+                <div class="progress"><span style="width: 100%"></span></div>
+                <div class="muted">92 on hand · minimum 38</div>
+              </article>
+            </div>
           </div>
 
-          <div class="dashboard-layout">
-            <section class="panel">
-              <div class="panel-heading">
-                <div>
-                  <h2>Stock Health</h2>
-                  <p>Items ranked by reorder urgency.</p>
-                </div>
-                <button class="secondary-button" id="runAutomationBtn">Run Check</button>
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Weekly Movement</h2>
+                <p>Estimated outbound spare-part demand.</p>
               </div>
-              <div id="healthList" class="health-list"></div>
-            </section>
-
-            <section class="panel">
-              <div class="panel-heading">
-                <div>
-                  <h2>Stock Movement</h2>
-                  <p>Inbound, outbound, and net changes.</p>
-                </div>
-              </div>
-              <div class="bar-chart" id="movementChart" aria-label="Stock movement chart"></div>
-            </section>
+            </div>
+            <div class="bar-chart" aria-label="Weekly stock movement chart">
+              <div class="bar"><div class="bar-fill" style="height: 94px"></div><span>Mon</span></div>
+              <div class="bar"><div class="bar-fill" style="height: 118px"></div><span>Tue</span></div>
+              <div class="bar"><div class="bar-fill" style="height: 142px"></div><span>Wed</span></div>
+              <div class="bar"><div class="bar-fill" style="height: 166px"></div><span>Thu</span></div>
+              <div class="bar"><div class="bar-fill" style="height: 192px"></div><span>Fri</span></div>
+              <div class="bar"><div class="bar-fill" style="height: 126px"></div><span>Sat</span></div>
+              <div class="bar"><div class="bar-fill" style="height: 82px"></div><span>Sun</span></div>
+            </div>
           </div>
         </section>
 
-        <section class="view" id="inventoryView" aria-labelledby="viewTitle">
-          <div class="toolbar">
-            <div class="segmented" role="tablist" aria-label="Inventory filters">
-              <button class="segment active" data-filter="all">All</button>
-              <button class="segment" data-filter="low">Low</button>
-              <button class="segment" data-filter="ok">Healthy</button>
-              <button class="segment" data-filter="overstock">Overstock</button>
+        <section class="panel section-panel" id="inventory">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Inventory</p>
+              <h2>Diesel Parts Stock List</h2>
             </div>
-            <button class="secondary-button" id="receiveStockBtn">Receive Stock</button>
-            <button class="secondary-button" id="dispatchStockBtn">Dispatch</button>
+            <span class="pill">Static table</span>
           </div>
 
           <div class="table-wrap">
@@ -137,137 +155,176 @@
                   <th>Reorder</th>
                   <th>Supplier</th>
                   <th>Status</th>
-                  <th></th>
                 </tr>
               </thead>
-              <tbody id="inventoryTable"></tbody>
+              <tbody>
+                <tr>
+                  <td><span class="sku">FLT-DF-1004</span></td>
+                  <td><strong>Diesel Fuel Filter</strong><div class="muted">F-04-02</div></td>
+                  <td>Filter Rack</td>
+                  <td>42</td>
+                  <td>26</td>
+                  <td>50</td>
+                  <td>Multi Jaya Diesel</td>
+                  <td><span class="status ok">Healthy</span></td>
+                </tr>
+                <tr>
+                  <td><span class="sku">FLT-OF-2201</span></td>
+                  <td><strong>Heavy Duty Oil Filter</strong><div class="muted">F-12-07</div></td>
+                  <td>Filter Rack</td>
+                  <td>18</td>
+                  <td>24</td>
+                  <td>80</td>
+                  <td>MANN Filter</td>
+                  <td><span class="status low">Low</span></td>
+                </tr>
+                <tr>
+                  <td><span class="sku">DEU-INJ-0415</span></td>
+                  <td><strong>Deutz Injector Nozzle</strong><div class="muted">E-03-01</div></td>
+                  <td>Engine Parts</td>
+                  <td>6</td>
+                  <td>12</td>
+                  <td>24</td>
+                  <td>Deutz</td>
+                  <td><span class="status low">Low</span></td>
+                </tr>
+                <tr>
+                  <td><span class="sku">CUM-BLT-7780</span></td>
+                  <td><strong>Cummins Fan Belt</strong><div class="muted">B-02-05</div></td>
+                  <td>Belts</td>
+                  <td>92</td>
+                  <td>38</td>
+                  <td>60</td>
+                  <td>Cummins</td>
+                  <td><span class="status overstock">Overstock</span></td>
+                </tr>
+                <tr>
+                  <td><span class="sku">ISZ-PMP-6312</span></td>
+                  <td><strong>Isuzu Water Pump</strong><div class="muted">P-09-03</div></td>
+                  <td>Pump Shelf</td>
+                  <td>11</td>
+                  <td>16</td>
+                  <td>45</td>
+                  <td>Isuzu</td>
+                  <td><span class="status low">Low</span></td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </section>
 
-        <section class="view" id="automationView" aria-labelledby="viewTitle">
-          <div class="automation-grid">
-            <section class="panel">
-              <div class="panel-heading">
-                <div>
-                  <h2>Stocking Rules</h2>
-                  <p>Set how the system creates reorder suggestions.</p>
-                </div>
-              </div>
-              <div class="form-grid">
-                <label>
-                  Reorder buffer
-                  <input id="bufferInput" type="number" min="0" max="100" step="5" />
-                </label>
-                <label>
-                  Demand multiplier
-                  <input id="demandInput" type="number" min="1" max="4" step="0.1" />
-                </label>
-                <label>
-                  Default lead time
-                  <input id="leadInput" type="number" min="1" max="60" />
-                </label>
-                <label class="toggle-row">
-                  <span>Auto-create purchase orders</span>
-                  <input id="autoOrdersInput" type="checkbox" />
-                </label>
-              </div>
-              <button class="primary-button full" id="saveRulesBtn">Save Rules</button>
-            </section>
-
-            <section class="panel">
-              <div class="panel-heading">
-                <div>
-                  <h2>Recommended Restocks</h2>
-                  <p>Calculated from minimums, demand, and lead time.</p>
-                </div>
-              </div>
-              <div id="recommendationsList" class="recommendation-list"></div>
-            </section>
-          </div>
-        </section>
-
-        <section class="view" id="ordersView" aria-labelledby="viewTitle">
+        <section class="automation-grid section-panel" id="restock">
           <div class="panel">
             <div class="panel-heading">
               <div>
-                <h2>Purchase Orders</h2>
-                <p>Open supplier replenishment created by automation or manual action.</p>
+                <p class="eyebrow">Automation</p>
+                <h2>Stocking Rules</h2>
               </div>
-              <button class="secondary-button" id="clearCompletedBtn">Clear Completed</button>
             </div>
-            <div id="ordersList" class="orders-list"></div>
+            <div class="rule-grid">
+              <div><span>Reorder buffer</span><strong>20%</strong></div>
+              <div><span>Demand multiplier</span><strong>1.4x</strong></div>
+              <div><span>Lead time</span><strong>7 days</strong></div>
+              <div><span>PO mode</span><strong>Prepared</strong></div>
+            </div>
           </div>
-        </section>
 
-        <section class="view" id="activityView" aria-labelledby="viewTitle">
           <div class="panel">
             <div class="panel-heading">
               <div>
-                <h2>Activity Log</h2>
-                <p>Every stock change and automation event.</p>
+                <p class="eyebrow">Recommendations</p>
+                <h2>Restock Plan</h2>
               </div>
-              <button class="secondary-button" id="resetDemoBtn">Reset Demo Data</button>
             </div>
-            <div id="activityLog" class="activity-log"></div>
+            <div class="recommendation-list">
+              <article class="recommendation">
+                <div class="order-row">
+                  <div>
+                    <strong>Heavy Duty Oil Filter</strong>
+                    <div class="muted">FLT-OF-2201 · MANN Filter</div>
+                  </div>
+                  <span class="status low">80 units</span>
+                </div>
+                <div class="muted">Target 41, currently 18. Order full carton quantity.</div>
+              </article>
+              <article class="recommendation">
+                <div class="order-row">
+                  <div>
+                    <strong>Deutz Injector Nozzle</strong>
+                    <div class="muted">DEU-INJ-0415 · Deutz</div>
+                  </div>
+                  <span class="status low">24 units</span>
+                </div>
+                <div class="muted">Target 22, currently 6. Critical engine-part stock.</div>
+              </article>
+              <article class="recommendation">
+                <div class="order-row">
+                  <div>
+                    <strong>Isuzu Water Pump</strong>
+                    <div class="muted">ISZ-PMP-6312 · Isuzu</div>
+                  </div>
+                  <span class="status low">45 units</span>
+                </div>
+                <div class="muted">Target 38, currently 11. Include in next supplier PO.</div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel section-panel" id="orders">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Purchasing</p>
+              <h2>Prepared Purchase Orders</h2>
+            </div>
+          </div>
+          <div class="orders-list">
+            <article class="order-card">
+              <div class="order-row">
+                <div>
+                  <strong>PO-1001</strong>
+                  <div class="muted">Heavy Duty Oil Filter · MANN Filter</div>
+                </div>
+                <span class="status low">Ordered</span>
+              </div>
+              <div class="muted">80 units · Rp17,200,000 · ETA 7 days</div>
+            </article>
+            <article class="order-card">
+              <div class="order-row">
+                <div>
+                  <strong>PO-1002</strong>
+                  <div class="muted">Deutz Injector Nozzle · Deutz</div>
+                </div>
+                <span class="status low">Ordered</span>
+              </div>
+              <div class="muted">24 units · Rp34,800,000 · ETA 7 days</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section-panel" id="activity">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Log</p>
+              <h2>Recent Activity</h2>
+            </div>
+          </div>
+          <div class="activity-log">
+            <article class="activity-item">
+              <span>Today 09:20</span>
+              <strong>Prepared PO-1002 for Deutz Injector Nozzle.</strong>
+            </article>
+            <article class="activity-item">
+              <span>Today 08:45</span>
+              <strong>Flagged Heavy Duty Oil Filter below minimum stock.</strong>
+            </article>
+            <article class="activity-item">
+              <span>Yesterday 16:10</span>
+              <strong>Received 12 Diesel Fuel Filter units into F-04-02.</strong>
+            </article>
           </div>
         </section>
       </main>
     </div>
-
-    <dialog id="itemDialog">
-      <form method="dialog" class="dialog-card" id="itemForm">
-        <div class="dialog-head">
-          <h2 id="itemDialogTitle">Add Item</h2>
-          <button class="icon-button" value="cancel" title="Close" aria-label="Close">×</button>
-        </div>
-        <input type="hidden" id="itemId" />
-        <div class="form-grid">
-          <label>SKU<input id="skuInput" required /></label>
-          <label>Item name<input id="nameInput" required /></label>
-          <label>Warehouse zone<input id="zoneInput" required /></label>
-          <label>Bin<input id="binInput" required /></label>
-          <label>On hand<input id="qtyInput" type="number" min="0" required /></label>
-          <label>Minimum<input id="minInput" type="number" min="0" required /></label>
-          <label>Reorder qty<input id="reorderInput" type="number" min="1" required /></label>
-          <label>Unit cost<input id="costInput" type="number" min="0" step="0.01" required /></label>
-          <label>Supplier<input id="supplierInput" required /></label>
-          <label>Daily demand<input id="demandRateInput" type="number" min="0" step="1" required /></label>
-        </div>
-        <div class="dialog-actions">
-          <button class="secondary-button" value="cancel">Cancel</button>
-          <button class="primary-button" id="saveItemBtn" value="default">Save Item</button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="stockDialog">
-      <form method="dialog" class="dialog-card" id="stockForm">
-        <div class="dialog-head">
-          <h2 id="stockDialogTitle">Adjust Stock</h2>
-          <button class="icon-button" value="cancel" title="Close" aria-label="Close">×</button>
-        </div>
-        <input type="hidden" id="stockMode" />
-        <label>
-          Item
-          <select id="stockItemSelect"></select>
-        </label>
-        <label>
-          Quantity
-          <input id="stockQtyInput" type="number" min="1" required />
-        </label>
-        <label>
-          Reference
-          <input id="stockReferenceInput" placeholder="PO, pick ticket, or note" />
-        </label>
-        <div class="dialog-actions">
-          <button class="secondary-button" value="cancel">Cancel</button>
-          <button class="primary-button" id="saveStockBtn" value="default">Apply</button>
-        </div>
-      </form>
-    </dialog>
-
-    <div id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js"></script>
   </body>
 </html>
