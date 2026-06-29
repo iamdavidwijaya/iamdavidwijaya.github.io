@@ -73,18 +73,15 @@ a {
   gap: 12px;
 }
 
-.brand-mark {
-  width: 48px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, #f6d45b 0%, #d7a526 48%, #d11f2f 49%, #a11421 100%);
-  color: #ffffff;
+.brand-logo {
+  width: 54px;
+  height: 54px;
+  display: block;
   border-radius: var(--radius);
-  font-weight: 900;
-  font-size: 0.8rem;
-  letter-spacing: 0;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24), 0 10px 24px rgba(0, 0, 0, 0.24);
+  object-fit: contain;
+  background: #050608;
+  padding: 4px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 10px 24px rgba(0, 0, 0, 0.24);
 }
 
 .brand span,
